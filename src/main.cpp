@@ -20,9 +20,11 @@ void setup()
   par.max_diff_readings = 1;
 
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
-  servoBus.setAutoStop(1, false);//vypne autostop praveho serva 
-
-  servoBus.set(0, 90_deg); //nastavy pozici leveho serva na 90 stupnu
-  servoBus.set(1, RightAngle(90_deg)); //nastavy pozici praveho srva na 90 stupnu
+  servoBus.setAutoStop(1, false);//vypne autostop praveho serva
+  
+  //na startu se otevira leve klepeto jako prvni
+grabber grabber;
+grabber.last_state = closed;
+grabber.Open();
 }
 void loop(){}
