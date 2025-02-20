@@ -3,7 +3,7 @@
 #include<Arduino.h>
 #include "Grabber.hpp"
 auto &man = rb::Manager::get(); //pro fungovani RBCX
-
+#include"Comunication.hpp"
 
 void setup()
 {
@@ -24,6 +24,10 @@ void setup()
   
   //na startu se otevira leve klepeto jako prvni
 grabber grabber;
+Communication message;
+
+message.WaitForReadyMessage();
+
 grabber.last_state = open;
 grabber.Close();
 }
