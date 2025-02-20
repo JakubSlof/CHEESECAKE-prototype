@@ -68,16 +68,7 @@ struct Communication{
           delay(10);
         }
         }
-      
-      
       }
-  
-
-
-
-
-
-
 };
 
 

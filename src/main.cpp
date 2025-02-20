@@ -1,8 +1,8 @@
 #include "SmartServoBus.hpp"
 #include "RBCX.h"
 #include<Arduino.h>
-#include "Grabber.hpp"
 auto &man = rb::Manager::get(); //pro fungovani RBCX
+#include "Grabber.hpp"
 #include"Comunication.hpp"
 
 void setup()
@@ -22,10 +22,11 @@ void setup()
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
-  //na startu se otevira leve klepeto jako prvni
+//struktury na ovladani robota
 grabber grabber;
 Communication message;
 
+//po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 message.WaitForReadyMessage();
 
 grabber.last_state = open;

@@ -21,8 +21,6 @@ enum grabber_state
         grab
     };
 
-
-
 //struktura grabber obsahuje vsechny funkce pro ovladani grabberu
 struct grabber
 {
