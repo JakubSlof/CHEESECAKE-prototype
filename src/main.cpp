@@ -1,7 +1,7 @@
 #include "SmartServoBus.hpp"
 #include "RBCX.h"
 #include<Arduino.h>
-#include "Klepeta.hpp"
+#include "Grabber.hpp"
 auto &man = rb::Manager::get(); //pro fungovani RBCX
 
 
@@ -24,7 +24,7 @@ void setup()
   
   //na startu se otevira leve klepeto jako prvni
 grabber grabber;
-grabber.last_state = closed;
-grabber.Open();
+grabber.last_state = open;
+grabber.Close();
 }
 void loop(){}
