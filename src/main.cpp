@@ -27,9 +27,9 @@ grabber grabber;
 Communication message;
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
-message.WaitForReadyMessage();
+//message.WaitForReadyMessage();
 
 grabber.last_state = open;
-grabber.Close();
+grabber.Grab();
 }
 void loop(){}

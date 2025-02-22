@@ -41,29 +41,29 @@ struct grabber
     //nastavy grabber na close pozici
     void Close(){
         if(last_state == open){
-            servoBus.set(1, RightAngle(150_deg)); 
-            delay(2000);//nutna prodleva, aby nedoslo ke kolizi klepet pri otvirani
+            servoBus.set(1, RightAngle(140_deg)); 
+            delay(1000);//nutna prodleva, aby nedoslo ke kolizi klepet pri otvirani
             servoBus.set(0, 145_deg); 
         }
         else{//grab
             servoBus.set(0, 50_deg); 
             delay(1000);
-            servoBus.set(1, RightAngle(150_deg));
-            delay(2000);//nutna prodleva, aby nedoslo ke kolizi klepet pri otvirani
-            servoBus.set(0, 148_deg); 
+            servoBus.set(1, RightAngle(140_deg));
+            delay(1000);//nutna prodleva, aby nedoslo ke kolizi klepet pri otvirani
+            servoBus.set(0, 145_deg); 
         }
         last_state = closed;
     }
     //nastavy grabber na grab pozici
     void Grab(){
         if(last_state == open){
-            servoBus.set(0, 90_deg);
-            servoBus.set(1, RightAngle(90_deg)); 
+            servoBus.set(0, 80_deg);
+            servoBus.set(1, RightAngle(75_deg)); 
         }
         else{//close
-            servoBus.set(0, 90_deg); 
+            servoBus.set(0, 80_deg); 
     delay(1000);//nutna prodleva, aby nedoslo ke kolizi klepet pri otvirani
-    servoBus.set(1, RightAngle(90_deg)); 
+    servoBus.set(1, RightAngle(75_deg)); 
         }
         last_state = grab;
     }
