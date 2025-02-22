@@ -4,6 +4,7 @@
 auto &man = rb::Manager::get(); //pro fungovani RBCX
 #include "Grabber.hpp"
 #include"Comunication.hpp"
+#include "Movement.hpp"
 
 void setup()
 {
@@ -25,11 +26,16 @@ void setup()
 //struktury na ovladani robota
 grabber grabber;
 Communication message;
+Movemennt move;
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 //message.WaitForReadyMessage();
 
-grabber.last_state = open;
-grabber.Grab();
+//grabber.last_state = open;
+//grabber.Grab();
+
+
+move.ArcRight(90,200);
+
 }
 void loop(){}
