@@ -1,6 +1,7 @@
 #include "SmartServoBus.hpp"
 #include "RBCX.h"
 #include<Arduino.h>
+#include<thread>
 auto &man = rb::Manager::get(); //pro fungovani RBCX
 #include "Grabber.hpp"
 #include"Comunication.hpp"
@@ -10,16 +11,41 @@ Grabber grabber;
 Communication message;
 Movemennt move;
 
+bool open_grabber = false; //promena ridici otevirani grabberu v threadu 
 
 
 void GoToField(){
   move.Acceleration(300,32000,400);
   move.ArcRight(180,180);
   move.Straight(32000,100,5000);
+  open_grabber = true; //tady se zacne otevirat grabber
   move.Arcleft(168, 150);
-  move.Straight(32000, 630,4000);
+  move.Straight(32000, 430,4000);
   move.Acceleration(32000, 100, 320);
   move.Stop();
+}
+
+//ceka na zmacknuti on tlacitka pak program pokracuje
+void WaitEorStart(){
+  while (true){
+    if (man.buttons().on() == 1){
+      break;
+    }
+    delay(10);
+  }
+}
+
+void OpenGrabberBeforeField(){
+  while (true)
+  {
+    if(open_grabber == true){
+      break;
+    }
+    delay(50);
+  }
+  delay(460);
+  grabber.Open();
+
 }
 
 void setup()
@@ -43,11 +69,18 @@ void setup()
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 //message.WaitForReadyMessage();
-
-//grabber.last_state = open;
-//grabber.Grab();
+WaitEorStart();
 
 
+grabber.Grab();
+WaitEorStart();
+///////////////////
+std::thread t1(OpenGrabberBeforeField);//thread pro otevirani grabberu za jizdy
 GoToField();
+t1.join();
+message.SendInPosstionMessage();
+
+
+grabber.Close();
 }
 void loop(){}
