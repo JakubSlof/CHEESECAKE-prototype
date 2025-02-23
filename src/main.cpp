@@ -13,7 +13,7 @@ Movemennt move;
 
 bool open_grabber = false; //promena ridici otevirani grabberu v threadu 
 
-
+//funkce pro jizdu do hriste
 void GoToField(){
   move.Acceleration(300,32000,400);
   move.ArcRight(180,180);
@@ -34,7 +34,7 @@ void WaitEorStart(){
     delay(10);
   }
 }
-
+//funkce pro otevirani grabberu po ceste do hriste
 void OpenGrabberBeforeField(){
   while (true)
   {
@@ -45,7 +45,6 @@ void OpenGrabberBeforeField(){
   }
   delay(460);
   grabber.Open();
-
 }
 
 void setup()
@@ -56,6 +55,8 @@ void setup()
 
   //parametry pro komunikaci se servy 
   servoBus.begin(2, UART_NUM_1, GPIO_NUM_27); 
+
+  Serial.begin(115200);
 
   //nastaveni parametru pro autostop serv
   SmartServoBus::AutoStopParams par;
@@ -74,9 +75,10 @@ WaitEorStart();
 
 grabber.Grab();
 WaitEorStart();
+delay(100);
 ///////////////////
 std::thread t1(OpenGrabberBeforeField);//thread pro otevirani grabberu za jizdy
-GoToField();
+GoToField(); //cesta do hriste
 t1.join();
 message.SendInPosstionMessage();
 
