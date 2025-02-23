@@ -49,6 +49,143 @@ int last_ticks_M2 = 0; // llevy motor
 }
 
 
+void Arcleft(int angle, int radius)
+{
+  man.motor(rb::MotorId::M2).setCurrentPosition(0);
+  man.motor(rb::MotorId::M3).setCurrentPosition(0);
+  auto &man = rb::Manager::get();
+  double inner_lenght = (((2 * PI * radius) / 360) * angle) / mm_to_ticks;
+  double outer_lenght = (((2 * 3.14 * (radius + wheel_base)) / 360) * angle) / mm_to_ticks;
+  Serial.println(inner_lenght);
+  int outer_sped = -3200;
+  int inner_speed = -(outer_sped * inner_lenght) / outer_lenght;
+  Serial.println(inner_speed);
+  int tics_M2 = 0;
+  int tics_M3 = 0;
+  Serial.println(outer_lenght);
+  while ((inner_lenght > tics_M2) && (outer_lenght > tics_M3))
+  {
+    man.motor(rb::MotorId::M3).speed(-outer_sped);
+    man.motor(rb::MotorId::M2).speed(-inner_speed);
+    man.motor(rb::MotorId::M3).requestInfo([&tics_M3](rb::Motor &info)
+                                           {
+            //printf("M3: position:%d\n", info.position());
+            tics_M3 = info.position(); });
+    man.motor(rb::MotorId::M2).requestInfo([&tics_M2](rb::Motor &info)
+                                           {
+            tics_M2 = info.position(); });
+    delay(10);
+  }
+}
+
+void Acceleration(int speed_from, int speed_to, int distance_mm)
+{
+  man.motor(rb::MotorId::M2).setCurrentPosition(0);
+  man.motor(rb::MotorId::M3).setCurrentPosition(0);
+  double distance_ticks = distance_mm / mm_to_ticks;
+  double acc_const = speed_to / distance_ticks;
+  int ticks_M2 = 0;
+  int ticks_M3 = 0;
+  int error = 0;
+  while ((ticks_M2 < distance_ticks) && (ticks_M3 < distance_ticks))
+  {
+    error = 10 * (ticks_M2 - ticks_M3);
+    man.motor(rb::MotorId::M2).speed(-(acc_const * ticks_M2 + speed_from - error));
+    man.motor(rb::MotorId::M3).speed(acc_const * ticks_M3 + speed_from + error);
+    man.motor(rb::MotorId::M3).requestInfo([&ticks_M3](rb::Motor &info)
+                                           {
+            //printf("M3: position:%d\n", info.position());
+            ticks_M3 = info.position(); });
+    man.motor(rb::MotorId::M2).requestInfo([&ticks_M2](rb::Motor &info)
+                                           {
+            //printf("M2: position:%d\n", info.position());
+            ticks_M2 = -info.position(); });
+
+    delay(10);
+  }
+}
+
+
+
+void TurnRight(int angle)
+{
+  man.motor(rb::MotorId::M2).setCurrentPosition(0);
+  man.motor(rb::MotorId::M3).setCurrentPosition(0);
+  int ticks_M2 = 0;
+  int ticks_M3 = 0;
+  int distance = ((PI * wheel_base) / 360) * angle / mm_to_ticks;
+  while (distance > ticks_M3)
+  {
+    man.motor(rb::MotorId::M2).speed(500);
+    man.motor(rb::MotorId::M3).speed(500);
+    man.motor(rb::MotorId::M3).requestInfo([&ticks_M3](rb::Motor &info)
+                                           {
+            //printf("M3: position:%d\n", info.position());
+            ticks_M3 = info.position(); });
+    man.motor(rb::MotorId::M2).requestInfo([&ticks_M2](rb::Motor &info)
+                                           {
+            //printf("M2: position:%d\n", info.position());
+            ticks_M2 = -info.position(); });
+
+    delay(10);
+  }
+  man.motor(rb::MotorId::M3).speed(0);
+  man.motor(rb::MotorId::M2).speed(0);
+}
+
+
+void TurnLeft(int angle)
+{
+  man.motor(rb::MotorId::M2).setCurrentPosition(0);
+  man.motor(rb::MotorId::M3).setCurrentPosition(0);
+  int ticks_M2 = 0;
+  int ticks_M3 = 0;
+  int distance = ((PI * wheel_base) / 360) * angle / mm_to_ticks;
+  while (distance > ticks_M3)
+  {
+    man.motor(rb::MotorId::M2).speed(-500);
+    man.motor(rb::MotorId::M3).speed(-500);
+    man.motor(rb::MotorId::M3).requestInfo([&ticks_M3](rb::Motor &info)
+                                           {
+            //Serial.println( -info.position());//"M3: position:%d\n",
+            ticks_M3 = -info.position(); });
+    man.motor(rb::MotorId::M2).requestInfo([&ticks_M2](rb::Motor &info)
+                                           {
+            //printf("M2: position:%d\n", info.position());
+            ticks_M2 = info.position(); });
+
+    delay(10);
+  }
+  man.motor(rb::MotorId::M3).speed(0);
+  man.motor(rb::MotorId::M2).speed(0);
+}
+
+
+
+
+void BackwardUntillWall(){
+  while (man.buttons().right() == 0 && man.buttons().on() == 0)
+  { //(ticks_M2 < distance)&& (ticks_M3 < distance)
+    man.motor(rb::MotorId::M2).speed(2500);
+    man.motor(rb::MotorId::M3).speed(-2500);
+    delay(10);
+  }
+  man.motor(rb::MotorId::M2).speed(0);
+  man.motor(rb::MotorId::M3).speed(0);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Funkce pro pohyb robota rovne 
  * @param speed: rychlost kterou robot pojede

@@ -5,6 +5,16 @@ auto &man = rb::Manager::get(); //pro fungovani RBCX
 #include "Grabber.hpp"
 #include"Comunication.hpp"
 #include "Movement.hpp"
+//struktury na ovladani robota
+Grabber grabber;
+Communication message;
+Movemennt move;
+
+
+
+void GoToField(){
+  
+}
 
 void setup()
 {
@@ -23,10 +33,7 @@ void setup()
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
-//struktury na ovladani robota
-grabber grabber;
-Communication message;
-Movemennt move;
+
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 //message.WaitForReadyMessage();

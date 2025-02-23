@@ -22,7 +22,7 @@ enum grabber_state
     };
 
 //struktura grabber obsahuje vsechny funkce pro ovladani grabberu
-struct grabber
+struct Grabber
 {
     grabber_state last_state = closed;//vychozi stav je zavreno
     //nastavy grabber na open pozici
