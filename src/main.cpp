@@ -13,7 +13,13 @@ Movemennt move;
 
 
 void GoToField(){
-  
+  move.Acceleration(300,32000,400);
+  move.ArcRight(180,180);
+  move.Straight(32000,100,5000);
+  move.Arcleft(168, 150);
+  move.Straight(32000, 630,4000);
+  move.Acceleration(32000, 100, 320);
+  move.Stop();
 }
 
 void setup()
@@ -42,7 +48,6 @@ void setup()
 //grabber.Grab();
 
 
-move.ArcRight(90,200);
-
+GoToField();
 }
 void loop(){}

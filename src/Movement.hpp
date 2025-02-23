@@ -7,7 +7,7 @@ struct Movemennt{
 
 
 double mm_to_ticks = 0.215; // konstanta pro prepocet tics enkoderu na mm
-int wheel_base = 150; // rovor  kol robota
+int wheel_base = 165; // rovor  kol robota
 int last_ticks_M3 = 0; // pravy motor
 int last_ticks_M2 = 0; // llevy motor
 
@@ -220,7 +220,10 @@ void Straight(int speed, int distance,int timeout)
 
 
 
-
+void Stop(){
+  man.motor(rb::MotorId::M2).speed(0);
+  man.motor(rb::MotorId::M3).speed(0);
+}
 
 
 
