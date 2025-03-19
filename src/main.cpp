@@ -81,8 +81,12 @@ std::thread t1(OpenGrabberBeforeField);//thread pro otevirani grabberu za jizdy
 GoToField(); //cesta do hriste
 t1.join();
 message.SendInPosstionMessage();
+message.WaitingForBearPosData();
 
+move.Straight(100,message.y_distance,99999999);
+move.TurnLeft(90);
+move.Straight(100,message.x_distance,99999999);
 
-grabber.Close();
+//grabber.Close();
 }
 void loop(){}

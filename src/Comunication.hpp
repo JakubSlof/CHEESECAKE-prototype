@@ -4,7 +4,7 @@
 #include <Arduino.h>
 struct Communication{
   int x_distance = 0;
-  int y_distakce = 0;
+  int y_distance = 0;
 
 
   //ceka nez dojde zprava z Raspberry Pi ze je pripraveno
@@ -24,13 +24,10 @@ struct Communication{
     }
     }
 
-
     //posle zpravu do Raspberry Pi ze je na pozici pro vyfoceni fotky
     void SendInPosstionMessage(){
     Serial.println("inposition");
     }
-
-
 
     void WaitingForBearPosData(){
 
@@ -62,7 +59,7 @@ struct Communication{
       
              if (num !=9999)
              {
-               y_distakce = num;
+               y_distance = num;
               break;
           }
           delay(10);

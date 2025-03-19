@@ -6,24 +6,26 @@
 using namespace lx16a;
 static SmartServoBus servoBus;
 
-//funkce pro vypocet o jaky uhel se ma otocit prave servo
-Angle RightAngle(Angle angle)
-{
-  angle = 240_deg - angle;
-  return angle;
-}
 
-//mozne pozice grabberu
-enum grabber_state
-    {
-        closed,
-        open,
-        grab
-    };
 
 //struktura grabber obsahuje vsechny funkce pro ovladani grabberu
 struct Grabber
 {
+    //funkce pro vypocet o jaky uhel se ma otocit prave servo
+    Angle RightAngle(Angle angle)
+    {
+    angle = 240_deg - angle;
+    return angle;
+    }
+
+    //mozne pozice grabberu
+    enum grabber_state
+        {
+            closed,
+            open,
+            grab
+        };
+
     grabber_state last_state = closed;//vychozi stav je zavreno
     //nastavy grabber na open pozici
     void Open(){

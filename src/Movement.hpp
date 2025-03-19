@@ -48,7 +48,6 @@ int last_ticks_M2 = 0; // llevy motor
   }
 }
 
-
 void Arcleft(int angle, int radius)
 {
   man.motor(rb::MotorId::M2).setCurrentPosition(0);
@@ -105,8 +104,6 @@ void Acceleration(int speed_from, int speed_to, int distance_mm)
   }
 }
 
-
-
 void TurnRight(int angle)
 {
   man.motor(rb::MotorId::M2).setCurrentPosition(0);
@@ -132,7 +129,6 @@ void TurnRight(int angle)
   man.motor(rb::MotorId::M3).speed(0);
   man.motor(rb::MotorId::M2).speed(0);
 }
-
 
 void TurnLeft(int angle)
 {
@@ -160,9 +156,6 @@ void TurnLeft(int angle)
   man.motor(rb::MotorId::M2).speed(0);
 }
 
-
-
-
 void BackwardUntillWall(){
   while (man.buttons().right() == 0 && man.buttons().on() == 0)
   { //(ticks_M2 < distance)&& (ticks_M3 < distance)
@@ -173,18 +166,6 @@ void BackwardUntillWall(){
   man.motor(rb::MotorId::M2).speed(0);
   man.motor(rb::MotorId::M3).speed(0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 /**
  * Funkce pro pohyb robota rovne 
@@ -217,8 +198,6 @@ void Straight(int speed, int distance,int timeout)
     time = time + 10;
   }
 }
-
-
 
 void Stop(){
   man.motor(rb::MotorId::M2).speed(0);
