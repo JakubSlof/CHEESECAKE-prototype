@@ -20,9 +20,62 @@ void GoToField(){
   move.Straight(32000,100,5000);
   open_grabber = true; //tady se zacne otevirat grabber
   move.Arcleft(168, 150);
-  move.Straight(32000, 430,4000);
-  move.Acceleration(32000, 100, 320);
+  move.Straight(20000, 430,4000);
+  move.Acceleration(20000, 100, 320);
   move.Stop();
+}
+
+void GoForBear(int x, int y){
+  x=x*10;
+  y=y*10;
+  //sector blue
+  if (x < 400){
+    if (y>1400){
+      y=1300;
+    }
+    move.Straight(2000,y,4000);
+    move.Stop();
+  }
+
+  //sector red
+  if (x >= 400 && x <= 600){
+    if (y>1400){
+      y=1300;
+    }
+    move.TurnRight(45);
+    move.Straight(2000,200,4000);
+    move.TurnLeft(45);
+    move.Straight(2000,y-200,4000);
+    move.Stop();
+  }
+
+  //sector yellow
+  if (x > 600 && y>300){
+    if(y>1400){
+      y=1300;
+    }
+    move.Straight(2000,y,4000);
+    move.TurnRight(90);
+    if(x>1400){
+      x=1300;
+    }
+    move.Straight(2000,x,4000);
+    move.Stop();
+  }
+
+  //sector green
+  if (x > 600 && y<=300){
+    if(y<300){
+      y=300;
+      }
+    move.Straight(2000,y,4000);
+    move.TurnRight(90);
+    if(x>1400){
+      x=1300;
+    }
+    move.Straight(2000,x,4000);
+    move.Stop();
+  }
 }
 
 //ceka na zmacknuti on tlacitka pak program pokracuje
@@ -69,7 +122,7 @@ void setup()
 
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
-//message.WaitForReadyMessage();
+message.WaitForReadyMessage();
 WaitEorStart();
 
 
@@ -83,9 +136,8 @@ t1.join();
 message.SendInPosstionMessage();
 message.WaitingForBearPosData();
 
-move.Straight(100,message.y_distance,99999999);
-move.TurnLeft(90);
-move.Straight(100,message.x_distance,99999999);
+
+GoForBear(message.x_distance,message.y_distance);
 
 //grabber.Close();
 }
