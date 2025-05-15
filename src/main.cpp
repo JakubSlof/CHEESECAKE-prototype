@@ -13,6 +13,16 @@ Movemennt move;
 
 bool open_grabber = false; //promena ridici otevirani grabberu v threadu 
 
+
+enum Sector
+{
+  blue,
+  red,
+  yellow,
+  green
+};
+Sector sector = blue; //vychozi sektor je blue
+
 //funkce pro jizdu do hriste
 void GoToField(){
   move.Acceleration(300,32000,400);
@@ -30,6 +40,7 @@ void GoForBear(int x, int y){
   y=y*10;
   //sector blue
   if (x < 400){
+    sector = blue;
     if (y>1400){
       y=1300;
     }
@@ -39,6 +50,7 @@ void GoForBear(int x, int y){
 
   //sector red
   if (x >= 400 && x <= 600){
+    sector = red;
     if (y>1400){
       y=1300;
     }
@@ -51,6 +63,7 @@ void GoForBear(int x, int y){
 
   //sector yellow
   if (x > 600 && y>300){
+    sector = yellow;
     if(y>1400){
       y=1300;
     }
@@ -65,6 +78,7 @@ void GoForBear(int x, int y){
 
   //sector green
   if (x > 600 && y<=300){
+    sector = green;
     if(y<300){
       y=300;
       }
@@ -76,6 +90,38 @@ void GoForBear(int x, int y){
     move.Straight(2000,x,4000);
     move.Stop();
   }
+}
+
+//funkce pro jizdu zpet do domovske pozice
+void GoHome(){
+  if (sector == blue){
+    move.BackwardUntillWall();
+    move.Straight(2000, 100, 99999);
+    move.TurnRight(90);
+    move.BackwardUntillWall();
+    move.Straight(2000, 150, 99999);
+    move.ArcRight(90, 300);
+    move.Straight(2000, 100, 99999);
+    move.Arcleft(190, 170);
+    move.Straight(2000, 100, 99999);
+    grabber.Open();
+  }
+else{
+  move.BackwardUntillWall();
+  move.Straight(2000, 30, 99999);
+  move.TurnLeft(90);
+  //////////////////////////
+  move.BackwardUntillWall();
+    move.Straight(2000, 100, 99999);
+    move.TurnRight(90);
+    move.BackwardUntillWall();
+    move.Straight(2000, 150, 99999);
+    move.ArcRight(90, 300);
+    move.Straight(2000, 100, 99999);
+    move.Arcleft(190, 170);
+    move.Straight(2000, 100, 99999);
+    grabber.Open();
+}
 }
 
 //ceka na zmacknuti on tlacitka pak program pokracuje
@@ -111,15 +157,19 @@ void setup()
 
   Serial.begin(115200);
 
+/////////////////////////////////
+
+/////////////////////////////////
+
+
   //nastaveni parametru pro autostop serv
-  SmartServoBus::AutoStopParams par;
-  par.max_diff_centideg = 1000;
-  par.max_diff_readings = 1;
+  //SmartServoBus::AutoStopParams par;
+  //par.max_diff_centideg = 1000;
+  //par.max_diff_readings = 1;
 
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
-
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 message.WaitForReadyMessage();
@@ -135,10 +185,10 @@ GoToField(); //cesta do hriste
 t1.join();
 message.SendInPosstionMessage();
 message.WaitingForBearPosData();
-
-
 GoForBear(message.x_distance,message.y_distance);
+grabber.Grab();
+delay(1500);
+GoHome();
 
-//grabber.Close();
 }
 void loop(){}

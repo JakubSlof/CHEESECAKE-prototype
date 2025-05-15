@@ -157,7 +157,7 @@ void TurnLeft(int angle)
 }
 
 void BackwardUntillWall(){
-  while (man.buttons().right() == 0 && man.buttons().on() == 0)
+  while (man.buttons().left() == 0 ) //|| man.buttons().on() == 1
   { //(ticks_M2 < distance)&& (ticks_M3 < distance)
     man.motor(rb::MotorId::M2).speed(2500);
     man.motor(rb::MotorId::M3).speed(-2500);
