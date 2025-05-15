@@ -156,11 +156,21 @@ void TurnLeft(int angle)
 }
 
 void BackwardUntillWall(){
-  while (man.buttons().left() == 0 ) //left je opravdu leve tlaitko
+  while (man.buttons().left() == 0 && man.buttons().right() == 0) //left je opravdu leve tlaitko
   { //(ticks_M2 < distance)&& (ticks_M3 < distance)
+    if(man.buttons().left() == 1){
+      man.motor(rb::MotorId::M3).speed(-3000);
+      man.motor(rb::MotorId::M2).speed(1000);
+    }
+    else if(man.buttons().right() == 1){
+      man.motor(rb::MotorId::M2).speed(3000);
+      man.motor(rb::MotorId::M3).speed(-1000);  
+    }
+    else{
     man.motor(rb::MotorId::M2).speed(2500);
     man.motor(rb::MotorId::M3).speed(-2500);
     delay(10);
+    }
   }
   man.motor(rb::MotorId::M2).speed(0);
   man.motor(rb::MotorId::M3).speed(0);

@@ -172,20 +172,6 @@ void setup()
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
-//je to right tlacitko
-while (true)
-{
-  if(man.buttons().right() == 1){
-    man.leds().green(true);
-    Serial.println("right");
-  }
-  else{
-    man.leds().green(false);
-  }
-}
-
-
-
 
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 message.WaitForReadyMessage();
