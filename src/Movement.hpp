@@ -5,7 +5,6 @@
 
 struct Movemennt{
 
-
 double mm_to_ticks = 0.215; // konstanta pro prepocet tics enkoderu na mm
 int wheel_base = 165; // rovor  kol robota
 int last_ticks_M3 = 0; // pravy motor
@@ -157,7 +156,7 @@ void TurnLeft(int angle)
 }
 
 void BackwardUntillWall(){
-  while (man.buttons().left() == 0 ) //|| man.buttons().on() == 1
+  while (man.buttons().left() == 0 ) //left je opravdu leve tlaitko
   { //(ticks_M2 < distance)&& (ticks_M3 < distance)
     man.motor(rb::MotorId::M2).speed(2500);
     man.motor(rb::MotorId::M3).speed(-2500);

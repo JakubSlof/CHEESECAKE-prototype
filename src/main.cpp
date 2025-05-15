@@ -96,8 +96,9 @@ void GoForBear(int x, int y){
 void GoHome(){
   if (sector == blue){
     move.BackwardUntillWall();
-    move.Straight(2000, 100, 99999);
-    move.TurnRight(90);
+    //move.Straight(2000, 100, 99999);//
+    //move.TurnRight(90);
+    move.Arcleft(95, 100);
     move.BackwardUntillWall();
     move.Straight(2000, 150, 99999);
     move.ArcRight(90, 300);
@@ -112,8 +113,9 @@ else{
   move.TurnLeft(90);
   //////////////////////////
   move.BackwardUntillWall();
-    move.Straight(2000, 100, 99999);
-    move.TurnRight(90);
+    //move.Straight(2000, 100, 99999);//
+    //move.TurnRight(90);
+    move.Arcleft(95, 100);
     move.BackwardUntillWall();
     move.Straight(2000, 150, 99999);
     move.ArcRight(90, 300);
