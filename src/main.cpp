@@ -108,7 +108,7 @@ void GoHome(){
   }
 else{
   move.BackwardUntillWall();
-  move.Straight(2000, 30, 99999);
+  move.Straight(2000, 30, 99999); 
   move.TurnLeft(90);
   //////////////////////////
   move.BackwardUntillWall();
