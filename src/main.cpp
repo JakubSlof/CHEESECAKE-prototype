@@ -104,8 +104,8 @@ void GoHome(){
     move.ArcRight(90, 300);
     move.Straight(2000, 100, 99999);
     move.Arcleft(190, 170);
-    move.Straight(2000, 100, 99999);
-    grabber.Open();
+    move.Straight(2000, 200, 99999);
+    //grabber.Open();
   }
 else{
   move.BackwardUntillWall();
@@ -121,8 +121,8 @@ else{
     move.ArcRight(90, 300);
     move.Straight(2000, 100, 99999);
     move.Arcleft(190, 170);
-    move.Straight(2000, 100, 99999);
-    grabber.Open();
+    move.Straight(2000, 200, 99999);
+    //grabber.Open();
 }
 }
 
