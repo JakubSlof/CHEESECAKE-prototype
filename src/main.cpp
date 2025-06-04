@@ -155,42 +155,23 @@ void setup()
   man.install();
 
   //parametry pro komunikaci se servy 
-  servoBus.begin(2, UART_NUM_1, GPIO_NUM_27); 
+  //servoBus.begin(2, UART_NUM_1, GPIO_NUM_27); 
 
   Serial.begin(115200);
-
-/////////////////////////////////
-
-/////////////////////////////////
-
-
-  //nastaveni parametru pro autostop serv
-  //SmartServoBus::AutoStopParams par;
-  //par.max_diff_centideg = 1000;
-  //par.max_diff_readings = 1;
-
-  servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
-  servoBus.setAutoStop(1, false);//vypne autostop praveho serva
-  
-
-//po zapnuti ceka na zpravu od Raspberry Pi ze je ready
-message.WaitForReadyMessage();
-WaitEorStart();
-
-
-grabber.Grab();
-WaitEorStart();
-delay(100);
-///////////////////
-std::thread t1(OpenGrabberBeforeField);//thread pro otevirani grabberu za jizdy
-GoToField(); //cesta do hriste
-t1.join();
-message.SendInPosstionMessage();
-message.WaitingForBearPosData();
-GoForBear(message.x_distance,message.y_distance);
-grabber.Grab();
-delay(1500);// aby se grabber stihnul zavrit
-GoHome();
+  int x_distance = 0;
+   while (true)
+        {
+          if(Serial.available() > 0){
+            int num;
+             String data = Serial.readStringUntil('\n');
+             const char* daata = data.c_str();
+             num = std::atoi(daata);
+             if (num == 1){
+                man.leds().green(true); //rozsviti zelenou diodu
+             }
+             break;
+          
+        }}
 
 }
 void loop(){}
