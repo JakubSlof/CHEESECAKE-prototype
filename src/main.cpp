@@ -46,6 +46,8 @@ void GoForBear(int x, int y){
     }
     move.Straight(2000,y,4000);
     move.Stop();
+    grabber.Grab();
+    delay(1200);// aby se grabber stihnul zavrit
   }
 
   //sector red
@@ -55,10 +57,13 @@ void GoForBear(int x, int y){
       y=1300;
     }
     move.TurnRight(45);
-    move.Straight(2000,200,4000);
+    move.Straight(2000,350,4000);
     move.TurnLeft(45);
     move.Straight(2000,y-200,4000);
     move.Stop();
+    grabber.Grab();
+    delay(1200);// aby se grabber stihnul zavrit
+    move.TurnRight(90);
   }
 
   //sector yellow
@@ -74,6 +79,8 @@ void GoForBear(int x, int y){
     }
     move.Straight(2000,x,4000);
     move.Stop();
+    grabber.Grab();
+    delay(1200);// aby se grabber stihnul zavrit
   }
 
   //sector green
@@ -89,6 +96,8 @@ void GoForBear(int x, int y){
     }
     move.Straight(2000,x,4000);
     move.Stop();
+    grabber.Grab();
+    delay(1200);// aby se grabber stihnul zavrit
   }
 }
 
@@ -159,20 +168,9 @@ void setup()
 
   Serial.begin(115200);
 
-/////////////////////////////////
-
-/////////////////////////////////
-
-
-  //nastaveni parametru pro autostop serv
-  //SmartServoBus::AutoStopParams par;
-  //par.max_diff_centideg = 1000;
-  //par.max_diff_readings = 1;
-
   servoBus.setAutoStop(0, false);//vypne autostop leveho serva 
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
-
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
 message.WaitForReadyMessage();
 WaitEorStart();
@@ -188,8 +186,6 @@ t1.join();
 message.SendInPosstionMessage();
 message.WaitingForBearPosData();
 GoForBear(message.x_distance,message.y_distance);
-grabber.Grab();
-delay(1500);// aby se grabber stihnul zavrit
 GoHome();
 
 }
