@@ -30,7 +30,7 @@ void GoToField(){
   move.Straight(32000,100,5000);
   open_grabber = true; //tady se zacne otevirat grabber
   move.Arcleft(168, 150);
-  move.Straight(20000, 430,4000);
+  move.Straight(20000, 410,4000);
   move.Acceleration(20000, 100, 320);
   move.Stop();
 }
@@ -56,8 +56,9 @@ void GoForBear(int x, int y){
     if (y>1400){
       y=1300;
     }
+    move.Straight(2000,100,4000);
     move.TurnRight(45);
-    move.Straight(2000,350,4000);
+    move.Straight(2000,400,4000);
     move.TurnLeft(45);
     move.Straight(2000,y-200,4000);
     move.Stop();
@@ -107,12 +108,12 @@ void GoHome(){
     move.BackwardUntillWall();
     //move.Straight(2000, 100, 99999);//
     //move.TurnRight(90);
-    move.Arcleft(95, 100);
+    move.Arcleft(95, 70);
     move.BackwardUntillWall();
     move.Straight(2000, 150, 99999);
     move.ArcRight(90, 300);
     move.Straight(2000, 100, 99999);
-    move.Arcleft(190, 170);
+    move.Arcleft(190, 180);
     move.Straight(2000, 200, 99999);
     //grabber.Open();
   }
@@ -124,12 +125,12 @@ else{
   move.BackwardUntillWall();
     //move.Straight(2000, 100, 99999);//
     //move.TurnRight(90);
-    move.Arcleft(95, 100);
+    move.Arcleft(95, 70);
     move.BackwardUntillWall();
     move.Straight(2000, 150, 99999);
     move.ArcRight(90, 300);
     move.Straight(2000, 100, 99999);
-    move.Arcleft(190, 170);
+    move.Arcleft(190, 180);
     move.Straight(2000, 200, 99999);
     //grabber.Open();
 }
