@@ -173,11 +173,15 @@ void setup()
   servoBus.setAutoStop(1, false);//vypne autostop praveho serva
   
 //po zapnuti ceka na zpravu od Raspberry Pi ze je ready
-message.WaitForReadyMessage();
+//message.WaitForReadyMessage();
 WaitEorStart();
+man.stupidServo(0).setPosition(0);
+while (true)
+{
+  delay(10);
+}
 
-
-grabber.Grab();
+//grabber.Grab();
 WaitEorStart();
 delay(100);
 ///////////////////
